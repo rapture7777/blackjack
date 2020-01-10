@@ -65,7 +65,11 @@ class Game extends Component {
   };
 
   deal = () => {
-    if (this.state.playerWins || this.state.playerLoses) {
+    if (
+      this.state.playerWins ||
+      this.state.playerLoses ||
+      this.state.playerBlackjack
+    ) {
       this.setState(currentState => {
         return {
           playerWins: false,
@@ -117,8 +121,8 @@ class Game extends Component {
   playerBlackjack() {
     this.setState(currentState => {
       return {
-        playerBlackjack: !currentState.playerBlackjack,
-        isPlaying: !currentState.isPlaying
+        playerBlackjack: true,
+        isPlaying: false
       };
     });
   }
@@ -172,7 +176,6 @@ class Game extends Component {
     };
 
     drawCard(copyPlayerHand);
-
     this.setState(
       currentState => {
         return {
@@ -184,6 +187,15 @@ class Game extends Component {
         [...this.state.playerHand].forEach(card => (handValue += card[1]));
         if (handValue === 21) {
           this.playerBlackjack();
+          // } else if (
+          //   handValue > 21 &&
+          //   this.state.playerHand.filter(card => /a/i.test(card[0]))
+          // ) {
+          //   this.setState(currentState => {
+          //     return {
+          //       playerHand: [...currentState.playerHand.indexOf()]
+          //     };
+          //   });
         } else if (handValue > 21) {
           this.playerLoses();
         }
