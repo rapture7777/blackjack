@@ -59,17 +59,19 @@ class Game extends Component {
       KS: 10
     },
     isPlaying: false,
-    playerWins: false
+    playerBlackjack: false,
+    playerWins: false,
+    playerLoses: false
   };
 
-  // componentDidMount() {
-  //   deal();
-  // }
-
   deal = () => {
-    if (this.state.playerWins) {
+    if (this.state.playerWins || this.state.playerLoses) {
       this.setState(currentState => {
-        return { playerWins: false };
+        return {
+          playerWins: false,
+          playerLoses: false,
+          playerBlackjack: false
+        };
       });
     }
 
@@ -112,15 +114,36 @@ class Game extends Component {
     );
   };
 
-  playerWinsFunc() {
+  playerBlackjack() {
     this.setState(currentState => {
-      return { playerWins: !currentState.playerWins };
+      return {
+        playerBlackjack: !currentState.playerBlackjack,
+        isPlaying: !currentState.isPlaying
+      };
+    });
+  }
+
+  playerWins() {
+    this.setState(currentState => {
+      return {
+        playerWins: !currentState.playerWins,
+        isPlaying: !currentState.isPlaying
+      };
+    });
+  }
+
+  playerLoses() {
+    this.setState(currentState => {
+      return {
+        playerLoses: !currentState.playerLoses,
+        isPlaying: !currentState.isPlaying
+      };
     });
   }
 
   play() {
     if (this.state.playerHand[0][1] + this.state.playerHand[1][1] === 21) {
-      this.playerWinsFunc();
+      this.playerBlackjack();
     } else {
       this.setState(currentState => {
         return { isPlaying: true };
@@ -128,20 +151,123 @@ class Game extends Component {
     }
   }
 
+  hit = () => {
+    const copyDeck = Object.entries(this.state.deck);
+    const copyPlayerHand = [...this.state.playerHand];
+
+    const generateIndex = () => {
+      return Math.floor(Math.random() * Math.floor(52));
+    };
+
+    const drawCard = hand => {
+      const drawnCard = copyDeck[generateIndex()];
+      if (
+        !copyPlayerHand.includes(drawnCard) &&
+        !this.state.dealerHand.includes(drawnCard)
+      ) {
+        hand.push(drawnCard);
+      } else {
+        drawCard();
+      }
+    };
+
+    drawCard(copyPlayerHand);
+
+    this.setState(
+      currentState => {
+        return {
+          playerHand: copyPlayerHand
+        };
+      },
+      () => {
+        let handValue = 0;
+        [...this.state.playerHand].forEach(card => (handValue += card[1]));
+        if (handValue === 21) {
+          this.playerBlackjack();
+        } else if (handValue > 21) {
+          this.playerLoses();
+        }
+        console.log(this.state.playerHand, this.state.dealerHand);
+      }
+    );
+  };
+
+  stand = () => {
+    let initialHandValue = 0;
+    let playerHandValue = 0;
+    [...this.state.dealerHand].forEach(card => (initialHandValue += card[1]));
+    [...this.state.playerHand].forEach(card => (playerHandValue += card[1]));
+    if (initialHandValue === 21) {
+      this.playerLoses();
+    } else if (initialHandValue > 17) {
+      return initialHandValue > playerHandValue
+        ? this.playerLoses()
+        : this.playerWins();
+    } else {
+      const copyDeck = Object.entries(this.state.deck);
+      const copyDealerHand = [...this.state.dealerHand];
+
+      const generateIndex = () => {
+        return Math.floor(Math.random() * Math.floor(52));
+      };
+
+      const drawCard = hand => {
+        const drawnCard = copyDeck[generateIndex()];
+        if (
+          !copyDealerHand.includes(drawnCard) &&
+          !this.state.playerHand.includes(drawnCard)
+        ) {
+          copyDealerHand.push(drawnCard);
+        } else {
+          drawCard();
+        }
+      };
+
+      drawCard(copyDealerHand);
+
+      this.setState(
+        currentState => {
+          return {
+            dealerHand: copyDealerHand
+          };
+        },
+        () => {
+          let hitHandValue = 0;
+          [...this.state.dealerHand].forEach(card => (hitHandValue += card[1]));
+          if (hitHandValue === 21) {
+            this.playerLoses();
+          } else if (hitHandValue > 21) {
+            this.playerWins();
+          } else if (hitHandValue < 21 && hitHandValue > 17) {
+            return hitHandValue > playerHandValue
+              ? this.playerLoses()
+              : this.playerWins();
+          } else {
+            this.stand();
+          }
+          console.log(this.state.playerHand, this.state.dealerHand);
+        }
+      );
+    }
+  };
+
   render() {
-    return !this.state.playerWins ? (
+    return (
       <main>
+        {this.state.playerWins && <h1>You win!</h1>}
+        {this.state.playerBlackjack && <h1>Blackjack!</h1>}
+        {this.state.playerLoses && <h1>You lose!</h1>}
         <p>
           Dealer hand:
           {this.state.dealerHand.length
-            ? `${this.state.dealerHand[0]}, ${this.state.dealerHand[1]}`
+            ? this.state.dealerHand.map(card => card[0])
             : ''}
         </p>
         <p id="dealersHand">{this.props.dealerHand}</p>
         <p>
           {this.props.playerName}'s hand:
           {this.state.playerHand.length
-            ? `${this.state.playerHand[0]}, ${this.state.playerHand[1]}`
+            ? this.state.playerHand.map(card => card[0])
             : ''}
         </p>
         <p id="playersHand">{this.props.playerHand}</p>
@@ -149,21 +275,9 @@ class Game extends Component {
         {this.state.isPlaying && (
           <section>
             <button onClick={this.hit}>Hit</button>
-            <button>Stand</button>
+            <button onClick={this.stand}>Stand</button>
           </section>
         )}
-      </main>
-    ) : (
-      <main>
-        <h1>Blackjack!</h1>
-        <p>
-          {this.props.playerName}'s hand:
-          {this.state.playerHand.length
-            ? `${this.state.playerHand[0]}, ${this.state.playerHand[1]}`
-            : ''}
-        </p>
-        <p id="playersHand">{this.props.playerHand}</p>
-        <button onClick={this.deal}>Deal</button>
       </main>
     );
   }
