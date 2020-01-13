@@ -70,12 +70,10 @@ class Game extends Component {
       this.state.playerLoses ||
       this.state.playerBlackjack
     ) {
-      this.setState(currentState => {
-        return {
-          playerWins: false,
-          playerLoses: false,
-          playerBlackjack: false
-        };
+      this.setState({
+        playerWins: false,
+        playerLoses: false,
+        playerBlackjack: false
       });
     }
 
@@ -105,11 +103,9 @@ class Game extends Component {
     drawCard(copyDealerHand);
 
     this.setState(
-      currentState => {
-        return {
-          playerHand: copyPlayerHand,
-          dealerHand: copyDealerHand
-        };
+      {
+        playerHand: copyPlayerHand,
+        dealerHand: copyDealerHand
       },
       () => {
         console.log(this.state.playerHand, this.state.dealerHand);
@@ -119,29 +115,23 @@ class Game extends Component {
   };
 
   playerBlackjack() {
-    this.setState(currentState => {
-      return {
-        playerBlackjack: true,
-        isPlaying: false
-      };
+    this.setState({
+      playerBlackjack: true,
+      isPlaying: false
     });
   }
 
   playerWins() {
-    this.setState(currentState => {
-      return {
-        playerWins: !currentState.playerWins,
-        isPlaying: !currentState.isPlaying
-      };
+    this.setState({
+      playerWins: true,
+      isPlaying: false
     });
   }
 
   playerLoses() {
-    this.setState(currentState => {
-      return {
-        playerLoses: !currentState.playerLoses,
-        isPlaying: !currentState.isPlaying
-      };
+    this.setState({
+      playerLoses: true,
+      isPlaying: false
     });
   }
 
@@ -149,9 +139,7 @@ class Game extends Component {
     if (this.state.playerHand[0][1] + this.state.playerHand[1][1] === 21) {
       this.playerBlackjack();
     } else {
-      this.setState(currentState => {
-        return { isPlaying: true };
-      });
+      this.setState({ isPlaying: true });
     }
   }
 
@@ -176,30 +164,19 @@ class Game extends Component {
     };
 
     drawCard(copyPlayerHand);
+
     this.setState(
-      currentState => {
-        return {
-          playerHand: copyPlayerHand
-        };
+      {
+        playerHand: copyPlayerHand
       },
       () => {
         let handValue = 0;
         [...this.state.playerHand].forEach(card => (handValue += card[1]));
         if (handValue === 21) {
           this.playerBlackjack();
-          // } else if (
-          //   handValue > 21 &&
-          //   this.state.playerHand.filter(card => /a/i.test(card[0]))
-          // ) {
-          //   this.setState(currentState => {
-          //     return {
-          //       playerHand: [...currentState.playerHand.indexOf()]
-          //     };
-          //   });
         } else if (handValue > 21) {
           this.playerLoses();
         }
-        console.log(this.state.playerHand, this.state.dealerHand);
       }
     );
   };
@@ -223,7 +200,7 @@ class Game extends Component {
         return Math.floor(Math.random() * Math.floor(52));
       };
 
-      const drawCard = hand => {
+      const drawCard = () => {
         const drawnCard = copyDeck[generateIndex()];
         if (
           !copyDealerHand.includes(drawnCard) &&
@@ -238,10 +215,8 @@ class Game extends Component {
       drawCard(copyDealerHand);
 
       this.setState(
-        currentState => {
-          return {
-            dealerHand: copyDealerHand
-          };
+        {
+          dealerHand: copyDealerHand
         },
         () => {
           let hitHandValue = 0;
@@ -266,30 +241,36 @@ class Game extends Component {
   render() {
     return (
       <main>
-        {this.state.playerWins && <h1>You win!</h1>}
-        {this.state.playerBlackjack && <h1>Blackjack!</h1>}
-        {this.state.playerLoses && <h1>You lose!</h1>}
-        <p>
-          Dealer hand:
-          {this.state.dealerHand.length
-            ? this.state.dealerHand.map(card => card[0])
-            : ''}
-        </p>
-        <p id="dealersHand">{this.props.dealerHand}</p>
-        <p>
-          {this.props.playerName}'s hand:
-          {this.state.playerHand.length
-            ? this.state.playerHand.map(card => card[0])
-            : ''}
-        </p>
-        <p id="playersHand">{this.props.playerHand}</p>
-        {!this.state.isPlaying && <button onClick={this.deal}>Deal</button>}
-        {this.state.isPlaying && (
-          <section>
-            <button onClick={this.hit}>Hit</button>
-            <button onClick={this.stand}>Stand</button>
-          </section>
-        )}
+        <header>
+          {this.state.playerWins && <h1>You win!</h1>}
+          {this.state.playerBlackjack && <h1>Blackjack!</h1>}
+          {this.state.playerLoses && <h1>You lose!</h1>}
+        </header>
+        <section className="dealerHand">
+          <p>
+            Dealer hand:
+            {this.state.dealerHand.length
+              ? this.state.dealerHand.map(card => card[0])
+              : ''}
+          </p>
+          <p id="dealersHand">{this.props.dealerHand}</p>
+        </section>
+        <section className="playerHand">
+          <p>
+            {this.props.playerName}'s hand:
+            {this.state.playerHand.length
+              ? this.state.playerHand.map(card => card[0])
+              : ''}
+          </p>
+          <p id="playersHand">{this.props.playerHand}</p>
+          {!this.state.isPlaying && <button onClick={this.deal}>Deal</button>}
+          {this.state.isPlaying && (
+            <section>
+              <button onClick={this.hit}>Hit</button>
+              <button onClick={this.stand}>Stand</button>
+            </section>
+          )}
+        </section>
       </main>
     );
   }
