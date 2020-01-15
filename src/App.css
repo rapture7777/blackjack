@@ -27,8 +27,9 @@
   color: #61dafb;
 }
 
-.input {
+input {
   min-width: 140px;
+  font-size: large;
 }
 
 @keyframes App-logo-spin {
@@ -47,6 +48,12 @@
 }
 
 .cardImg {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+button {
+  font-size: x-large;
+  border-radius: 10%;
+  padding: 5%;
 }

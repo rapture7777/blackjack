@@ -308,6 +308,15 @@ class Game extends Component {
       21
     ) {
       this.playerBlackjack();
+    } else if (
+      this.state.playerHand[0][1].value + this.state.playerHand[1][1].value ===
+      22
+    ) {
+      this.setState(() => {
+        let copyHand = [...this.state.playerHand];
+        copyHand[1][1] = 1;
+        return { playerHand: copyHand, isPlaying: true };
+      });
     } else {
       this.setState({ isPlaying: true });
     }
@@ -333,7 +342,25 @@ class Game extends Component {
         if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
       });
       if (playerCardDuplicate === false && dealerCardDuplicate === false) {
-        hand.push(drawnCard);
+        let handValue = hand.reduce((acc, card) => acc + card[1].value, 0);
+        let handAce = hand.filter(card => /A/.test(card[0]));
+        if (handAce.length && handValue > 10) {
+          let handAceIndex;
+          hand.forEach(function(card) {
+            if (/A/.test(card[0])) {
+              handAceIndex = hand.indexOf(card);
+            }
+          });
+          hand[handAceIndex][1].value = 1;
+          if (drawnCard[0][1].value === 11 && handValue > 10) {
+            drawnCard[0][1].value = 1;
+            hand.push(drawnCard);
+          } else {
+            hand.push(drawnCard);
+          }
+        } else {
+          hand.push(drawnCard);
+        }
       } else {
         drawCard(hand);
       }
@@ -346,9 +373,9 @@ class Game extends Component {
         playerHand: copyPlayerHand
       },
       () => {
-        let handValue = 0;
-        [...this.state.playerHand].forEach(
-          card => (handValue += card[1].value)
+        let handValue = [...this.state.playerHand].reduce(
+          (acc, card) => (acc += card[1].value),
+          0
         );
         if (handValue === 21) {
           this.playerBlackjack();
@@ -383,6 +410,23 @@ class Game extends Component {
         return Math.floor(Math.random() * Math.floor(52));
       };
 
+      // const drawCard = hand => {
+      //   const drawnCard = copyDeck[generateIndex()];
+      //   let playerCardDuplicate = false;
+      //   let dealerCardDuplicate = false;
+      //   copyPlayerHand.forEach(function(card) {
+      //     if (card.includes(drawnCard[0])) playerCardDuplicate = true;
+      //   });
+      //   copyDealerHand.forEach(function(card) {
+      //     if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
+      //   });
+      //   if (playerCardDuplicate === false && dealerCardDuplicate === false) {
+      //     hand.push(drawnCard);
+      //   } else {
+      //     drawCard(hand);
+      //   }
+      // };
+
       const drawCard = hand => {
         const drawnCard = copyDeck[generateIndex()];
         let playerCardDuplicate = false;
@@ -394,7 +438,25 @@ class Game extends Component {
           if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
         });
         if (playerCardDuplicate === false && dealerCardDuplicate === false) {
-          hand.push(drawnCard);
+          let handValue = hand.reduce((acc, card) => acc + card[1].value, 0);
+          let handAce = hand.filter(card => /A/.test(card[0]));
+          if (handAce.length && handValue > 10) {
+            let handAceIndex;
+            hand.forEach(function(card) {
+              if (/A/.test(card[0])) {
+                handAceIndex = hand.indexOf(card);
+              }
+            });
+            hand[handAceIndex][1].value = 1;
+            if (drawnCard[0][1].value === 11 && handValue > 10) {
+              drawnCard[0][1].value = 1;
+              hand.push(drawnCard);
+            } else {
+              hand.push(drawnCard);
+            }
+          } else {
+            hand.push(drawnCard);
+          }
         } else {
           drawCard(hand);
         }
