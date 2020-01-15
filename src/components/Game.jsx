@@ -234,15 +234,15 @@ class Game extends Component {
 
     const drawCard = hand => {
       const drawnCard = copyDeck[generateIndex()];
-      console.log(this.state.playerHand);
-      let cardDuplicate = false;
-      this.state.playerHand.forEach(function(card) {
-        if (card.includes(drawnCard[0])) cardDuplicate = true;
+      let playerCardDuplicate = false;
+      let dealerCardDuplicate = false;
+      copyPlayerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) playerCardDuplicate = true;
       });
-      this.state.dealerHand.forEach(function(card) {
-        if (card.includes(drawnCard[0])) cardDuplicate = true;
+      copyDealerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
       });
-      if (!cardDuplicate) {
+      if (playerCardDuplicate === false && dealerCardDuplicate === false) {
         hand.push(drawnCard);
       } else {
         drawCard(hand);
@@ -316,6 +316,7 @@ class Game extends Component {
   hit = () => {
     const copyDeck = Object.entries(this.state.deck);
     const copyPlayerHand = [...this.state.playerHand];
+    const copyDealerHand = [...this.state.dealerHand];
 
     const generateIndex = () => {
       return Math.floor(Math.random() * Math.floor(52));
@@ -323,13 +324,18 @@ class Game extends Component {
 
     const drawCard = hand => {
       const drawnCard = copyDeck[generateIndex()];
-      if (
-        !copyPlayerHand.includes(drawnCard) &&
-        !this.state.dealerHand.includes(drawnCard)
-      ) {
+      let playerCardDuplicate = false;
+      let dealerCardDuplicate = false;
+      copyPlayerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) playerCardDuplicate = true;
+      });
+      copyDealerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
+      });
+      if (playerCardDuplicate === false && dealerCardDuplicate === false) {
         hand.push(drawnCard);
       } else {
-        drawCard();
+        drawCard(hand);
       }
     };
 
@@ -371,20 +377,26 @@ class Game extends Component {
     } else {
       const copyDeck = Object.entries(this.state.deck);
       const copyDealerHand = [...this.state.dealerHand];
+      const copyPlayerHand = [...this.state.playerHand];
 
       const generateIndex = () => {
         return Math.floor(Math.random() * Math.floor(52));
       };
 
-      const drawCard = () => {
+      const drawCard = hand => {
         const drawnCard = copyDeck[generateIndex()];
-        if (
-          !copyDealerHand.includes(drawnCard) &&
-          !this.state.playerHand.includes(drawnCard)
-        ) {
-          copyDealerHand.push(drawnCard);
+        let playerCardDuplicate = false;
+        let dealerCardDuplicate = false;
+        copyPlayerHand.forEach(function(card) {
+          if (card.includes(drawnCard[0])) playerCardDuplicate = true;
+        });
+        copyDealerHand.forEach(function(card) {
+          if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
+        });
+        if (playerCardDuplicate === false && dealerCardDuplicate === false) {
+          hand.push(drawnCard);
         } else {
-          drawCard();
+          drawCard(hand);
         }
       };
 
