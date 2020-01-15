@@ -219,7 +219,8 @@ class Game extends Component {
     playerBlackjack: false,
     playerWins: false,
     playerLoses: false,
-    playerPush: false
+    playerPush: false,
+    dealerCardUncovered: false
   };
 
   deal = () => {
@@ -273,32 +274,40 @@ class Game extends Component {
       playerBlackjack: false,
       playerPush: false,
       playerHand: [],
-      dealerHand: []
+      dealerHand: [],
+      dealerCardUncovered: false
     });
   }
 
   playerBlackjack() {
     this.setState({
       playerBlackjack: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
   playerWins() {
     this.setState({
       playerWins: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
   playerPush() {
-    this.setState({ playerPush: true, isPlaying: false });
+    this.setState({
+      playerPush: true,
+      isPlaying: false,
+      dealerCardUncovered: true
+    });
   }
 
   playerLoses() {
     this.setState({
       playerLoses: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
@@ -387,6 +396,7 @@ class Game extends Component {
   };
 
   stand = () => {
+    this.setState({ dealerCardUncovered: true });
     let initialHandValue = 0;
     let playerHandValue = 0;
     [...this.state.dealerHand].forEach(
@@ -509,9 +519,15 @@ class Game extends Component {
               ? this.state.dealerHand.map(card => (
                   <img
                     key={card[0]}
-                    src={images[card[0]]}
+                    src={
+                      this.state.dealerCardUncovered ||
+                      card[0] !== this.state.dealerHand[0][0]
+                        ? images[card[0]]
+                        : 'https://opengameart.org/sites/default/files/card%20back%20red.png'
+                    }
                     className="cardImg"
                     alt={card[0]}
+                    width="120"
                   ></img>
                 ))
               : ''}
