@@ -218,22 +218,12 @@ class Game extends Component {
     isPlaying: false,
     playerBlackjack: false,
     playerWins: false,
-    playerLoses: false
+    playerLoses: false,
+    playerPush: false
   };
 
   deal = () => {
-    if (
-      this.state.playerWins ||
-      this.state.playerLoses ||
-      this.state.playerBlackjack
-    ) {
-      this.setState({
-        playerWins: false,
-        playerLoses: false,
-        playerBlackjack: false
-      });
-    }
-
+    this.resetPlay();
     const copyDeck = Object.entries(this.state.deck);
     const copyPlayerHand = [];
     const copyDealerHand = [];
@@ -244,13 +234,18 @@ class Game extends Component {
 
     const drawCard = hand => {
       const drawnCard = copyDeck[generateIndex()];
-      if (
-        !this.state.playerHand.includes(drawnCard) &&
-        !this.state.dealerHand.includes(drawnCard)
-      ) {
+      console.log(this.state.playerHand);
+      let cardDuplicate = false;
+      this.state.playerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) cardDuplicate = true;
+      });
+      this.state.dealerHand.forEach(function(card) {
+        if (card.includes(drawnCard[0])) cardDuplicate = true;
+      });
+      if (!cardDuplicate) {
         hand.push(drawnCard);
       } else {
-        drawCard();
+        drawCard(hand);
       }
     };
 
@@ -271,6 +266,17 @@ class Game extends Component {
     );
   };
 
+  resetPlay() {
+    this.setState({
+      playerWins: false,
+      playerLoses: false,
+      playerBlackjack: false,
+      playerPush: false,
+      playerHand: [],
+      dealerHand: []
+    });
+  }
+
   playerBlackjack() {
     this.setState({
       playerBlackjack: true,
@@ -283,6 +289,10 @@ class Game extends Component {
       playerWins: true,
       isPlaying: false
     });
+  }
+
+  playerPush() {
+    this.setState({ playerPush: true, isPlaying: false });
   }
 
   playerLoses() {
@@ -354,10 +364,10 @@ class Game extends Component {
     );
     if (initialHandValue === 21) {
       this.playerLoses();
-    } else if (initialHandValue > 17) {
-      return initialHandValue > playerHandValue
-        ? this.playerLoses()
-        : this.playerWins();
+    } else if (initialHandValue >= 17) {
+      if (initialHandValue > playerHandValue) this.playerLoses();
+      else if (initialHandValue === playerHandValue) this.playerPush();
+      else if (initialHandValue < playerHandValue) this.playerWins();
     } else {
       const copyDeck = Object.entries(this.state.deck);
       const copyDealerHand = [...this.state.dealerHand];
@@ -412,11 +422,15 @@ class Game extends Component {
         <header>
           {this.state.playerWins && <h1>You win!</h1>}
           {this.state.playerBlackjack && <h1>Blackjack!</h1>}
+          {this.state.playerPush && <h1>Push!</h1>}
           {this.state.playerLoses && <h1>You lose!</h1>}
+          {!this.state.playerWins &&
+            !this.state.playerBlackjack &&
+            !this.state.playerLoses &&
+            this.state.isPlaying && <h1>Hit or stand?</h1>}
         </header>
         <section className="dealerHand">
           <p>
-            Dealer hand:
             {this.state.dealerHand.length
               ? this.state.dealerHand.map(card => (
                   <img
@@ -432,7 +446,6 @@ class Game extends Component {
         </section>
         <section className="playerHand">
           <p>
-            {this.props.playerName}'s hand:
             {this.state.playerHand.length
               ? this.state.playerHand.map(card => (
                   <img
