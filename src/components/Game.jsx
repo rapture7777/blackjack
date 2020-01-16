@@ -387,45 +387,35 @@ class Game extends Component {
   };
 
   stand = () => {
-    let initialHandValue = 0;
-    let playerHandValue = 0;
-    [...this.state.dealerHand].forEach(
-      card => (initialHandValue += card[1].value)
+    // bug when dealer has blackjack at initial deal
+    let initialHandValue = [...this.state.dealerHand].reduce(
+      (acc, card) => (acc += card[1].value),
+      0
     );
-    [...this.state.playerHand].forEach(
-      card => (playerHandValue += card[1].value)
+    console.log(initialHandValue, '<--initialHandValue');
+    let playerHandValue = [...this.state.playerHand].reduce(
+      (acc, card) => (acc += card[1].value),
+      0
     );
+    let handAce = [...this.state.dealerHand].filter(card => /A/.test(card[0]));
+    const copyDeck = Object.entries(this.state.deck);
+    const copyDealerHand = [...this.state.dealerHand];
+    const copyPlayerHand = [...this.state.playerHand];
+
     if (initialHandValue === 21) {
       this.playerLoses();
-    } else if (initialHandValue >= 17) {
+    } else if (
+      initialHandValue >= 17 &&
+      initialHandValue !== 21 &&
+      !handAce.length
+    ) {
       if (initialHandValue > playerHandValue) this.playerLoses();
-      else if (initialHandValue === playerHandValue) this.playerPush();
-      else if (initialHandValue < playerHandValue) this.playerWins();
+      if (initialHandValue === playerHandValue) this.playerPush();
+      if (initialHandValue < playerHandValue) this.playerWins();
     } else {
-      const copyDeck = Object.entries(this.state.deck);
-      const copyDealerHand = [...this.state.dealerHand];
-      const copyPlayerHand = [...this.state.playerHand];
-
       const generateIndex = () => {
         return Math.floor(Math.random() * Math.floor(52));
       };
-
-      // const drawCard = hand => {
-      //   const drawnCard = copyDeck[generateIndex()];
-      //   let playerCardDuplicate = false;
-      //   let dealerCardDuplicate = false;
-      //   copyPlayerHand.forEach(function(card) {
-      //     if (card.includes(drawnCard[0])) playerCardDuplicate = true;
-      //   });
-      //   copyDealerHand.forEach(function(card) {
-      //     if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
-      //   });
-      //   if (playerCardDuplicate === false && dealerCardDuplicate === false) {
-      //     hand.push(drawnCard);
-      //   } else {
-      //     drawCard(hand);
-      //   }
-      // };
 
       const drawCard = hand => {
         const drawnCard = copyDeck[generateIndex()];
@@ -439,6 +429,7 @@ class Game extends Component {
         });
         if (playerCardDuplicate === false && dealerCardDuplicate === false) {
           let handValue = hand.reduce((acc, card) => acc + card[1].value, 0);
+          console.log(handValue, '<--drawHandValue');
           let handAce = hand.filter(card => /A/.test(card[0]));
           if (handAce.length && handValue > 10) {
             let handAceIndex;
@@ -473,6 +464,7 @@ class Game extends Component {
           [...this.state.dealerHand].forEach(
             card => (hitHandValue += card[1].value)
           );
+          console.log(hitHandValue, '<--hitHandValue');
           if (hitHandValue === 21) {
             this.playerLoses();
           } else if (hitHandValue > 21) {
