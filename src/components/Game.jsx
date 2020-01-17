@@ -6,225 +6,70 @@ class Game extends Component {
     playerHand: [],
     dealerHand: [],
     deck: {
-      AC: {
-        value: 11,
-        img: '../img/clubA.png'
-      },
-      '2C': {
-        value: 2,
-        img: '../img/club2.png'
-      },
-      '3C': {
-        value: 3,
-        img: '../img/club3.png'
-      },
-      '4C': {
-        value: 4,
-        img: '../img/club4.png'
-      },
-      '5C': {
-        value: 5,
-        img: '../img/club5.png'
-      },
-      '6C': {
-        value: 6,
-        img: '../img/club6.png'
-      },
-      '7C': {
-        value: 7,
-        img: '../img/club7.png'
-      },
-      '8C': {
-        value: 8,
-        img: '../img/club8.png'
-      },
-      '9C': {
-        value: 9,
-        img: '../img/club9.png'
-      },
-      '10C': {
-        value: 10,
-        img: '../img/club10.png'
-      },
-      JC: {
-        value: 10,
-        img: '../img/clubJ.png'
-      },
-      QC: {
-        value: 10,
-        img: '../img/clubQ.png'
-      },
-      KC: {
-        value: 10,
-        img: '../img/clubK.png'
-      },
-      AD: {
-        value: 11,
-        img: '../img/diamondA.png'
-      },
-      '2D': {
-        value: 2,
-        img: '../img/diamond2.png'
-      },
-      '3D': {
-        value: 3,
-        img: '../img/diamond3.png'
-      },
-      '4D': {
-        value: 4,
-        img: '../img/diamond4.png'
-      },
-      '5D': {
-        value: 5,
-        img: '../img/diamond5.png'
-      },
-      '6D': {
-        value: 6,
-        img: '../img/diamond6.png'
-      },
-      '7D': {
-        value: 7,
-        img: '../img/diamond7.png'
-      },
-      '8D': {
-        value: 8,
-        img: '../img/diamond8.png'
-      },
-      '9D': {
-        value: 9,
-        img: '../img/diamond9.png'
-      },
-      '10D': {
-        value: 10,
-        img: '../img/diamond10.png'
-      },
-      JD: {
-        value: 10,
-        img: '../img/diamondJ.png'
-      },
-      QD: {
-        value: 10,
-        img: '../img/diamondQ.png'
-      },
-      KD: {
-        value: 10,
-        img: '../img/diamondK.png'
-      },
-      AH: {
-        value: 11,
-        img: '../img/heartA.png'
-      },
-      '2H': {
-        value: 2,
-        img: '../img/heart2.png'
-      },
-      '3H': {
-        value: 3,
-        img: '../img/heart3.png'
-      },
-      '4H': {
-        value: 4,
-        img: '../img/heart4.png'
-      },
-      '5H': {
-        value: 5,
-        img: '../img/heart5.png'
-      },
-      '6H': {
-        value: 6,
-        img: '../img/heart6.png'
-      },
-      '7H': {
-        value: 7,
-        img: '../img/heart7.png'
-      },
-      '8H': {
-        value: 8,
-        img: '../img/heart8.png'
-      },
-      '9H': {
-        value: 9,
-        img: '../img/heart9.png'
-      },
-      '10H': {
-        value: 10,
-        img: '../img/heart10.png'
-      },
-      JH: {
-        value: 10,
-        img: '../img/heartJ.png'
-      },
-      QH: {
-        value: 10,
-        img: '../img/heartQ.png'
-      },
-      KH: {
-        value: 10,
-        img: '../img/heartK.png'
-      },
-      AS: {
-        value: 11,
-        img: '../img/spadeA.png'
-      },
-      '2S': {
-        value: 2,
-        img: '../img/spade2.png'
-      },
-      '3S': {
-        value: 3,
-        img: '../img/spade3.png'
-      },
-      '4S': {
-        value: 4,
-        img: '../img/spade4.png'
-      },
-      '5S': {
-        value: 5,
-        img: '../img/spade5.png'
-      },
-      '6S': {
-        value: 6,
-        img: '../img/spade6.png'
-      },
-      '7S': {
-        value: 7,
-        img: '../img/spade7.png'
-      },
-      '8S': {
-        value: 8,
-        img: '../img/spade8.png'
-      },
-      '9S': {
-        value: 9,
-        img: '../img/spade9.png'
-      },
-      '10S': {
-        value: 10,
-        img: '../img/spade10.png'
-      },
-      JS: {
-        value: 10,
-        img: '../img/spadeJ.png'
-      },
-      QS: {
-        value: 10,
-        img: '../img/spadeQ.png'
-      },
-      KS: {
-        value: 10,
-        img: '../img/spadeK.png'
-      }
+      AC: 11,
+      '2C': 2,
+      '3C': 3,
+      '4C': 4,
+      '5C': 5,
+      '6C': 6,
+      '7C': 7,
+      '8C': 8,
+      '9C': 9,
+      '10C': 10,
+      JC: 10,
+      QC: 10,
+      KC: 10,
+      AD: 11,
+      '2D': 2,
+      '3D': 3,
+      '4D': 4,
+      '5D': 5,
+      '6D': 6,
+      '7D': 7,
+      '8D': 8,
+      '9D': 9,
+      '10D': 10,
+      JD: 10,
+      QD: 10,
+      KD: 10,
+      AH: 11,
+      '2H': 2,
+      '3H': 3,
+      '4H': 4,
+      '5H': 5,
+      '6H': 6,
+      '7H': 7,
+      '8H': 8,
+      '9H': 9,
+      '10H': 10,
+      JH: 10,
+      QH: 10,
+      KH: 10,
+      AS: 11,
+      '2S': 2,
+      '3S': 3,
+      '4S': 4,
+      '5S': 5,
+      '6S': 6,
+      '7S': 7,
+      '8S': 8,
+      '9S': 9,
+      '10S': 10,
+      JS: 10,
+      QS: 10,
+      KS: 10
     },
     isPlaying: false,
     playerBlackjack: false,
     playerWins: false,
     playerLoses: false,
-    playerPush: false
+    playerPush: false,
+    dealerCardUncovered: false
   };
 
   deal = () => {
     this.resetPlay();
-    const copyDeck = Object.entries(this.state.deck);
+    const copyDeck = [...Object.entries(this.state.deck)];
     const copyPlayerHand = [];
     const copyDealerHand = [];
 
@@ -233,7 +78,7 @@ class Game extends Component {
     };
 
     const drawCard = hand => {
-      const drawnCard = copyDeck[generateIndex()];
+      const drawnCard = [...copyDeck[generateIndex()]];
       let playerCardDuplicate = false;
       let dealerCardDuplicate = false;
       copyPlayerHand.forEach(function(card) {
@@ -273,43 +118,48 @@ class Game extends Component {
       playerBlackjack: false,
       playerPush: false,
       playerHand: [],
-      dealerHand: []
+      dealerHand: [],
+      dealerCardUncovered: false
     });
   }
 
   playerBlackjack() {
     this.setState({
       playerBlackjack: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
   playerWins() {
     this.setState({
       playerWins: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
   playerPush() {
-    this.setState({ playerPush: true, isPlaying: false });
+    this.setState({
+      playerPush: true,
+      isPlaying: false,
+      dealerCardUncovered: true
+    });
   }
 
   playerLoses() {
     this.setState({
       playerLoses: true,
-      isPlaying: false
+      isPlaying: false,
+      dealerCardUncovered: true
     });
   }
 
   play() {
-    if (
-      this.state.playerHand[0][1].value + this.state.playerHand[1][1].value ===
-      21
-    ) {
+    if (this.state.playerHand[0][1] + this.state.playerHand[1][1] === 21) {
       this.playerBlackjack();
     } else if (
-      this.state.playerHand[0][1].value + this.state.playerHand[1][1].value ===
+      this.state.playerHand[0][1] + this.state.playerHand[1][1] ===
       22
     ) {
       this.setState(() => {
@@ -332,7 +182,7 @@ class Game extends Component {
     };
 
     const drawCard = hand => {
-      const drawnCard = copyDeck[generateIndex()];
+      const drawnCard = [...copyDeck[generateIndex()]];
       let playerCardDuplicate = false;
       let dealerCardDuplicate = false;
       copyPlayerHand.forEach(function(card) {
@@ -342,18 +192,27 @@ class Game extends Component {
         if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
       });
       if (playerCardDuplicate === false && dealerCardDuplicate === false) {
-        let handValue = hand.reduce((acc, card) => acc + card[1].value, 0);
+        let handValue = hand.reduce((acc, card) => acc + card[1], 0);
         let handAce = hand.filter(card => /A/.test(card[0]));
-        if (handAce.length && handValue > 10) {
-          let handAceIndex;
-          hand.forEach(function(card) {
-            if (/A/.test(card[0])) {
-              handAceIndex = hand.indexOf(card);
-            }
-          });
-          hand[handAceIndex][1].value = 1;
-          if (drawnCard[0][1].value === 11 && handValue > 10) {
-            drawnCard[0][1].value = 1;
+        if (handAce.length) {
+          if (handValue + drawnCard[1] > 21) {
+            let handAceIndex;
+            hand.forEach(function(card) {
+              if (/A/.test(card[0])) {
+                handAceIndex = hand.indexOf(card);
+              }
+            });
+            hand[handAceIndex][1] = 1;
+          }
+          if (drawnCard[1] === 11 && handValue > 10) {
+            drawnCard[1] = 1;
+            hand.push(drawnCard);
+          } else {
+            hand.push(drawnCard);
+          }
+        } else if (!handAce.length) {
+          if (drawnCard[1] === 11 && handValue > 10) {
+            drawnCard[1] = 1;
             hand.push(drawnCard);
           } else {
             hand.push(drawnCard);
@@ -374,7 +233,7 @@ class Game extends Component {
       },
       () => {
         let handValue = [...this.state.playerHand].reduce(
-          (acc, card) => (acc += card[1].value),
+          (acc, card) => (acc += card[1]),
           0
         );
         if (handValue === 21) {
@@ -387,28 +246,21 @@ class Game extends Component {
   };
 
   stand = () => {
-    // bug when dealer has blackjack at initial deal
     let initialHandValue = [...this.state.dealerHand].reduce(
-      (acc, card) => (acc += card[1].value),
+      (acc, card) => (acc += card[1]),
       0
     );
-    console.log(initialHandValue, '<--initialHandValue');
     let playerHandValue = [...this.state.playerHand].reduce(
-      (acc, card) => (acc += card[1].value),
+      (acc, card) => (acc += card[1]),
       0
     );
-    let handAce = [...this.state.dealerHand].filter(card => /A/.test(card[0]));
-    const copyDeck = Object.entries(this.state.deck);
+    const copyDeck = [...Object.entries(this.state.deck)];
     const copyDealerHand = [...this.state.dealerHand];
     const copyPlayerHand = [...this.state.playerHand];
 
     if (initialHandValue === 21) {
       this.playerLoses();
-    } else if (
-      initialHandValue >= 17 &&
-      initialHandValue !== 21 &&
-      !handAce.length
-    ) {
+    } else if (initialHandValue >= 17 && initialHandValue < 21) {
       if (initialHandValue > playerHandValue) this.playerLoses();
       if (initialHandValue === playerHandValue) this.playerPush();
       if (initialHandValue < playerHandValue) this.playerWins();
@@ -418,7 +270,7 @@ class Game extends Component {
       };
 
       const drawCard = hand => {
-        const drawnCard = copyDeck[generateIndex()];
+        const drawnCard = [...copyDeck[generateIndex()]];
         let playerCardDuplicate = false;
         let dealerCardDuplicate = false;
         copyPlayerHand.forEach(function(card) {
@@ -428,19 +280,25 @@ class Game extends Component {
           if (card.includes(drawnCard[0])) dealerCardDuplicate = true;
         });
         if (playerCardDuplicate === false && dealerCardDuplicate === false) {
-          let handValue = hand.reduce((acc, card) => acc + card[1].value, 0);
-          console.log(handValue, '<--drawHandValue');
+          let handValue = hand.reduce((acc, card) => acc + card[1], 0);
           let handAce = hand.filter(card => /A/.test(card[0]));
-          if (handAce.length && handValue > 10) {
+          if (handAce.length) {
             let handAceIndex;
             hand.forEach(function(card) {
               if (/A/.test(card[0])) {
                 handAceIndex = hand.indexOf(card);
               }
             });
-            hand[handAceIndex][1].value = 1;
-            if (drawnCard[0][1].value === 11 && handValue > 10) {
-              drawnCard[0][1].value = 1;
+            hand[handAceIndex][1] = 1;
+            if (drawnCard[1] === 11 && handValue > 10) {
+              drawnCard[1] = 1;
+              hand.push(drawnCard);
+            } else {
+              hand.push(drawnCard);
+            }
+          } else if (!handAce.length) {
+            if (drawnCard[1] === 11 && handValue > 10) {
+              drawnCard[1] = 1;
               hand.push(drawnCard);
             } else {
               hand.push(drawnCard);
@@ -460,11 +318,10 @@ class Game extends Component {
           dealerHand: copyDealerHand
         },
         () => {
-          let hitHandValue = 0;
-          [...this.state.dealerHand].forEach(
-            card => (hitHandValue += card[1].value)
+          let hitHandValue = [...this.state.dealerHand].reduce(
+            (acc, card) => (acc += card[1]),
+            0
           );
-          console.log(hitHandValue, '<--hitHandValue');
           if (hitHandValue === 21) {
             this.playerLoses();
           } else if (hitHandValue > 21) {
@@ -501,9 +358,15 @@ class Game extends Component {
               ? this.state.dealerHand.map(card => (
                   <img
                     key={card[0]}
-                    src={images[card[0]]}
+                    src={
+                      this.state.dealerCardUncovered ||
+                      card[0] !== this.state.dealerHand[0][0]
+                        ? images[card[0]]
+                        : images.CB
+                    }
                     className="cardImg"
                     alt={card[0]}
+                    width="120"
                   ></img>
                 ))
               : ''}

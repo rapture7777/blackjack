@@ -1,4 +1,5 @@
 const images = {
+  CB: require('../img/cardBack.png'),
   AC: require('../img/clubA.png'),
   '2C': require('../img/club2.png'),
   '3C': require('../img/club3.png'),
